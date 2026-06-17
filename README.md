@@ -271,4 +271,4 @@ vwpt="80系端口、指定回源端口" cdnym="CF解析IP的域名" bash <(curl 
 ----------------------------------------------------------
 ### 声明：所有代码来源于Github社区与ChatGPT的整合
 
-### Thanks to [zmto/vtexs](https://console.zmto.com/?affid=1558) for the sponsorship support
+### Thanks to [zmto/vtexs](https://github.com/phc10996/argosbx) for the sponsorship support
