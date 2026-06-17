@@ -82,7 +82,7 @@ echo "*****************************************************"
 echo "*****************************************************"
 echo "Github项目  ：github.com/phc10996"
 echo ""
-echo "YouTube频道 ：www.youtube.com/@ygkkk"
+echo "YouTube频道 ：github.com/phc10996"
 echo "Argosbx小钢炮脚本-SAP多账户自动部署并保活脚本【VPS】"
 echo "版本：V25.10.5"
 echo "*****************************************************"
@@ -228,7 +228,7 @@ for i in "${!CF_USERNAMES[@]}"; do
     fi
   else
     echo "🟡${APP_NAME} 未部署，开始部署……"
-    push_out="$(cf push "$APP_NAME" --docker-image ygkkk/argosbx -m 512M --health-check-type port 2>&1)"
+    push_out="$(cf push "$APP_NAME" --docker-image phc10996/argosbx -m 512M --health-check-type port 2>&1)"
     echo "$push_out"
     pushout
     if [ $? -ne 0 ]; then
