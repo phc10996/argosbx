@@ -91,15 +91,38 @@ v4dq=$( (command -v curl >/dev/null 2>&1 && curl -s4m5 -k https://myip.ipip.net/
 v6dq=$( (command -v curl >/dev/null 2>&1 && curl -s6m5 -k https://ip.fm | sed -n 's/.*Location: //p' 2>/dev/null) || (command -v wget >/dev/null 2>&1 && timeout 3 wget -6 --tries=2 -qO- https://ip.fm | grep '<span class="has-text-grey-light">Location:' | tail -n1 | sed -E 's/.*>Location: <\/span>([^<]+)<.*/\1/' 2>/dev/null) )
 }
 warpsx(){
-warpurl=$( (command -v curl >/dev/null 2>&1 && curl -sm5 -k https://warp.xijp.eu.org 2>/dev/null) || (command -v wget >/dev/null 2>&1 && timeout 3 wget --tries=2 -qO- https://warp.xijp.eu.org 2>/dev/null) )
-if [ -z "$warpurl" ] || printf '%s' "$warpurl" | grep -q html; then
-wpv6='2606:4700:110:8d8d:1845:c39f:2dd5:a03a'
-pvk='52cuYFgCJXp0LAq7+nWJIbCXXgU9eGggOc+Hlfz5u6A='
-res='[215, 69, 233]'
-else
-pvk=$(echo "$warpurl" | awk -F'：' '/Private_key/{print $2}' | xargs)
-wpv6=$(echo "$warpurl" | awk -F'：' '/IPV6/{print $2}' | xargs)
-res=$(echo "$warpurl" | awk -F'：' '/reserved/{print $2}' | xargs)
+# ★ 使用 wgcf 官方注册 Cloudflare WARP（替代私有 warp.xijp.eu.org）
+if [ ! -e "$HOME/agsbx/wgcf" ]; then
+  wgcf_ver=$( (command -v curl >/dev/null 2>&1 && curl -sL --connect-timeout 10 https://api.github.com/repos/ViRb3/wgcf/releases/latest | grep '"tag_name"' | cut -d'"' -f4) || echo "v2.2.28" )
+  wgcf_ver=${wgcf_ver:-v2.2.28}
+  wgcf_ver_num=${wgcf_ver#v}
+  (command -v curl >/dev/null 2>&1 && curl -Lo "$HOME/agsbx/wgcf" -# --retry 2 --connect-timeout 15 "https://github.com/ViRb3/wgcf/releases/download/${wgcf_ver}/wgcf_${wgcf_ver_num}_linux_${cpu}") || \
+  (command -v wget>/dev/null 2>&1 && timeout 30 wget -O "$HOME/agsbx/wgcf" --tries=2 "https://github.com/ViRb3/wgcf/releases/download/${wgcf_ver}/wgcf_${wgcf_ver_num}_linux_${cpu}")
+  chmod +x "$HOME/agsbx/wgcf" 2>/dev/null
+fi
+if [ -e "$HOME/agsbx/wgcf" ]; then
+  cd "$HOME/agsbx" 2>/dev/null || return
+  ./wgcf register --accept-tos 2>/dev/null
+  if [ -f wgcf-account.toml ]; then
+    pvk=$(grep 'device_private_key' wgcf-account.toml | cut -d"'" -f2)
+    clid=$(grep 'client_id' wgcf-account.toml 2>/dev/null | cut -d"'" -f2)
+    if [ -n "$clid" ]; then
+      res_bytes=$( (echo "$clid" | base64 -d 2>/dev/null || echo "$clid" | openssl base64 -d 2>/dev/null) | od -An -tu1 | head -1)
+      res="[$(echo "$res_bytes" | awk '{print $1", "$2", "$3}')]"
+    fi
+    ./wgcf generate 2>/dev/null
+    if [ -f wgcf-profile.conf ]; then
+      wpv6=$(grep 'Address' wgcf-profile.conf | cut -d'=' -f2 | tr ',' '\n' | grep ':' | head -1 | tr -d ' ' | cut -d'/' -f1)
+    fi
+  fi
+fi
+# 清理临时文件
+rm -f "$HOME/agsbx/warpkey.pem" 2>/dev/null
+# 回退：如果 wgcf 注册失败，使用默认值
+if [ -z "$pvk" ] || [ -z "$wpv6" ] || [ -z "$res" ]; then
+  wpv6='2606:4700:110:8d8d:1845:c39f:2dd5:a03a'
+  pvk='52cuYFgCJXp0LAq7+nWJIbCXXgU9eGggOc+Hlfz5u6A='
+  res='[215, 69, 233]'
 fi
 if [ -n "$name" ]; then
 sxname=$name-
