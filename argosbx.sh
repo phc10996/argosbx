@@ -91,7 +91,7 @@ v4dq=$( (command -v curl >/dev/null 2>&1 && curl -s4m5 -k https://myip.ipip.net/
 v6dq=$( (command -v curl >/dev/null 2>&1 && curl -s6m5 -k https://ip.fm | sed -n 's/.*Location: //p' 2>/dev/null) || (command -v wget >/dev/null 2>&1 && timeout 3 wget -6 --tries=2 -qO- https://ip.fm | grep '<span class="has-text-grey-light">Location:' | tail -n1 | sed -E 's/.*>Location: <\/span>([^<]+)<.*/\1/' 2>/dev/null) )
 }
 warpsx(){
-# ★ 使用 wgcf 官方注册 Cloudflare WARP（替代私有 warp.xijp.eu.org）
+# ★ 使用 wgcf 官方注册 Cloudflare WARP
 if [ ! -e "$HOME/agsbx/wgcf" ]; then
   wgcf_ver=$( (command -v curl >/dev/null 2>&1 && curl -sL --connect-timeout 10 https://api.github.com/repos/ViRb3/wgcf/releases/latest | grep '"tag_name"' | cut -d'"' -f4) || echo "v2.2.28" )
   wgcf_ver=${wgcf_ver:-v2.2.28}
