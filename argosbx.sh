@@ -79,7 +79,7 @@ apk update >/dev/null 2>&1 && apk add --no-cache bash busybox-extras gcompat lib
 elif command -v apt >/dev/null 2>&1; then
 export DEBIAN_FRONTEND=noninteractive
 printf 'iptables-persistent iptables-persistent/autosave_v4 boolean true\niptables-persistent iptables-persistent/autosave_v6 boolean true\n' | debconf-set-selections
-apt update >/dev/null 2>&1 && apt install -y busybox coreutils util-linux iptables iptables-persistent cron openssl >/dev/null 2>&1
+apt update >/dev/null 2>&1 && apt install -y busybox coreutils util-linux iptables iptables-persistent cron openssl unzip >/dev/null 2>&1
 fi
 touch sbx_update
 fi
@@ -181,16 +181,38 @@ case "$warp" in *x6*) xryx='ForceIPv6' ;; *x*) xryx='ForceIPv4v6' ;; *) xryx='Fo
 fi
 }
 upxray(){
-url="https://github.com/phc10996/argosbx/releases/download/argosbx/xray-$cpu"; out="$HOME/agsbx/xray"; (command -v curl >/dev/null 2>&1 && curl -Lo "$out" -# --retry 2 "$url") || (command -v wget>/dev/null 2>&1 && timeout 3 wget -O "$out" --tries=2 "$url")
-chmod +x "$HOME/agsbx/xray"
+case $cpu in
+  amd64) xray_url="https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip"; xray_zip="Xray-linux-64.zip" ;;
+  arm64) xray_url="https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-arm64-v8a.zip"; xray_zip="Xray-linux-arm64-v8a.zip" ;;
+esac
+out="$HOME/agsbx/$xray_zip"
+(command -v curl >/dev/null 2>&1 && curl -Lo "$out" -# --retry 2 "$xray_url") || (command -v wget>/dev/null 2>&1 && timeout 30 wget -O "$out" --tries=2 "$xray_url")
+if [ -f "$out" ]; then
+  unzip -o "$out" -d "$HOME/agsbx/" xray 2>/dev/null
+  chmod +x "$HOME/agsbx/xray" 2>/dev/null
+  rm -f "$out"
+fi
 sbcore=$("$HOME/agsbx/xray" version 2>/dev/null | awk '/^Xray/{print $2}')
-echo "已安装Xray正式版内核：$sbcore"
+echo "已安装Xray官方版内核：$sbcore"
 }
 upsingbox(){
-url="https://github.com/phc10996/argosbx/releases/download/argosbx/sing-box-$cpu"; out="$HOME/agsbx/sing-box"; (command -v curl>/dev/null 2>&1 && curl -Lo "$out" -# --retry 2 "$url") || (command -v wget>/dev/null 2>&1 && timeout 3 wget -O "$out" --tries=2 "$url")
-chmod +x "$HOME/agsbx/sing-box"
+singbox_ver=$( (command -v curl >/dev/null 2>&1 && curl -sL --connect-timeout 10 https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep '"tag_name"' | cut -d'"' -f4) || echo "v1.13.13" )
+singbox_ver=${singbox_ver:-v1.13.13}
+singbox_ver_num=${singbox_ver#v}
+case $cpu in
+  amd64) singbox_url="https://github.com/SagerNet/sing-box/releases/download/${singbox_ver}/sing-box-${singbox_ver_num}-linux-amd64.tar.gz"; singbox_file="sing-box-${singbox_ver_num}-linux-amd64.tar.gz"; sb_dir="sing-box-${singbox_ver_num}-linux-amd64" ;;
+  arm64) singbox_url="https://github.com/SagerNet/sing-box/releases/download/${singbox_ver}/sing-box-${singbox_ver_num}-linux-arm64.tar.gz"; singbox_file="sing-box-${singbox_ver_num}-linux-arm64.tar.gz"; sb_dir="sing-box-${singbox_ver_num}-linux-arm64" ;;
+esac
+out="$HOME/agsbx/$singbox_file"
+(command -v curl >/dev/null 2>&1 && curl -Lo "$out" -# --retry 2 "$singbox_url") || (command -v wget>/dev/null 2>&1 && timeout 30 wget -O "$out" --tries=2 "$singbox_url")
+if [ -f "$out" ]; then
+  tar -xzf "$out" -C "$HOME/agsbx/" 2>/dev/null
+  [ -f "$HOME/agsbx/$sb_dir/sing-box" ] && mv "$HOME/agsbx/$sb_dir/sing-box" "$HOME/agsbx/sing-box" 2>/dev/null
+  chmod +x "$HOME/agsbx/sing-box" 2>/dev/null
+  rm -rf "$HOME/agsbx/$sb_dir" "$out" 2>/dev/null
+fi
 sbcore=$("$HOME/agsbx/sing-box" version 2>/dev/null | awk '/version/{print $NF}')
-echo "已安装Sing-box正式版内核：$sbcore"
+echo "已安装Sing-box官方版内核：$sbcore"
 }
 insuuid(){
 if [ -z "$uuid" ] && [ ! -e "$HOME/agsbx/uuid" ]; then
