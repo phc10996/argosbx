@@ -58,7 +58,7 @@ echo
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 echo "Github项目 ：github.com/phc10996"
 echo ""
-echo "YouTube频道 ：www.youtube.com/@ygkkk"
+echo "YouTube频道 ：www.youtube.com/@phc10996"
 echo "Argosbx一键无交互小钢炮脚本💣"
 echo "当前版本：V26.5.10"
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
