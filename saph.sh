@@ -100,9 +100,9 @@ fi
 
 echo "*****************************************************"
 echo "*****************************************************"
-echo "甬哥Github项目  ：github.com/phc10996"
-echo "甬哥Blogger博客 ：ygkkk.blogspot.com"
-echo "甬哥YouTube频道 ：www.youtube.com/@ygkkk"
+echo "Github项目  ：github.com/phc10996"
+echo ""
+echo "YouTube频道 ：www.youtube.com/@ygkkk"
 echo "Argosbx小钢炮脚本-SAP多账户自动保活脚本【VPS】"
 echo "版本：V25.10.19"
 echo "*****************************************************"
