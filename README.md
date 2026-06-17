@@ -236,7 +236,7 @@ vwpt="80系端口、指定回源端口" cdnym="CF解析IP的域名" bash <(curl 
 
 ----------------------------------------------------------
 
-#### 相关教程可参考[甬哥博客](https://ygkkk.blogspot.com/2025/08/argosb.html)，视频教程如下：
+#### 相关教程可参考[原项目博客](https://github.com/phc10996/2025/08/argosb.html)，视频教程如下：
 
 [小白一分钟快速自建翻墙VPN代理：一键生成SSH命令；解决IP限制、IP质量太差问题；Argo固定隧道设置要点](https://youtu.be/xHzZFP_ywLs)
 
@@ -258,10 +258,10 @@ vwpt="80系端口、指定回源端口" cdnym="CF解析IP的域名" bash <(curl 
 
 ----------------------------------------------------------
 
-### 交流平台：[甬哥博客地址](https://ygkkk.blogspot.com)、[甬哥YouTube频道](https://www.youtube.com/@ygkkk)、[甬哥TG电报群组](https://t.me/+jZHc6-A-1QQ5ZGVl)、[甬哥TG电报频道](https://t.me/+DkC9ZZUgEFQzMTZl)
+### 交流平台：[原项目博客地址](https://github.com/phc10996)、[YouTube频道](https://www.youtube.com/@ygkkk)、[原项目TG电报群组](https://t.me/+jZHc6-A-1QQ5ZGVl)、[原项目TG电报频道](https://t.me/+DkC9ZZUgEFQzMTZl)
 
 ----------------------------------------------------------
-### 感谢支持！微信打赏甬哥侃侃侃ygkkk
+### 感谢支持！微信打赏原项目侃侃侃ygkkk
 ![41440820a366deeb8109db5610313a1](https://github.com/user-attachments/assets/e5b1f2c0-bd2c-4b8f-8cda-034d3c8ef73f)
 
 ----------------------------------------------------------
