@@ -10,7 +10,7 @@
 
 #### 2、支持Linux类主流VPS系统（建议最新版系统），SSH脚本支持非root环境运行，无脑一次回车搞定
 
-#### 3、支持各种容器系统，Docker镜像部署，公开镜像库：```ygkkk/argosbx```
+#### 3、支持各种容器系统，Docker镜像部署，公开镜像库：```phc10996/argosbx```
 
 #### 4、根据Sing-box与Xray不同内核，可选15种WARP出站组合，更换落地IP为WARP的IP，解锁流媒体
 
@@ -258,10 +258,10 @@ vwpt="80系端口、指定回源端口" cdnym="CF解析IP的域名" bash <(curl 
 
 ----------------------------------------------------------
 
-### 交流平台：[原项目博客地址](https://github.com/phc10996)、[YouTube频道](https://www.youtube.com/@ygkkk)、[原项目TG电报群组](https://t.me/+jZHc6-A-1QQ5ZGVl)、[原项目TG电报频道](https://t.me/+DkC9ZZUgEFQzMTZl)
+### 交流平台：[原项目博客地址](https://github.com/phc10996)、[YouTube频道](https://github.com/phc10996)、[原项目TG电报群组](https://t.me/+jZHc6-A-1QQ5ZGVl)、[原项目TG电报频道](https://t.me/+DkC9ZZUgEFQzMTZl)
 
 ----------------------------------------------------------
-### 感谢支持！微信打赏原项目侃侃侃ygkkk
+### 感谢支持！微信打赏
 ![41440820a366deeb8109db5610313a1](https://github.com/user-attachments/assets/e5b1f2c0-bd2c-4b8f-8cda-034d3c8ef73f)
 
 ----------------------------------------------------------
